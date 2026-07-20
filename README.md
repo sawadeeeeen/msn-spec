@@ -16,10 +16,10 @@ graph TD
     Neymar -->|修復・アップデート| Messi
     Neymar -->|完成された仕様書| Goal((SSoT 完成!))
 
-    style Messi fill:#f9d5e5,stroke:#333,stroke-width:2px
-    style Suarez fill:#eeac99,stroke:#333,stroke-width:2px
-    style Neymar fill:#e2f0cb,stroke:#333,stroke-width:2px
-    style Goal fill:#b5e7a0,stroke:#333,stroke-width:2px
+    style Messi fill:#f9d5e5,stroke:#333,stroke-width:2px,color:#111
+    style Suarez fill:#eeac99,stroke:#333,stroke-width:2px,color:#111
+    style Neymar fill:#e2f0cb,stroke:#333,stroke-width:2px,color:#111
+    style Goal fill:#b5e7a0,stroke:#333,stroke-width:2px,color:#111
 ```
 
 ### 🇦🇷 Messi (Creator / 仕様作成) — `gdd-creator`
