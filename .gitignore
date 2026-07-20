@@ -1,0 +1,7 @@
+# Agent Skills Installation & Cache
+.agents/
+.cursor/
+skills-lock.json
+
+# Temporary GDD Reports
+gdd-validator-report.md
