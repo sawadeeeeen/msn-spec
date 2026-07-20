@@ -60,11 +60,12 @@
 
 ### ユースケース 1: 新規仕様作成と検証
 1. ユーザー（Manager）が `messi` に新規機能名（例: `auth`）と要求を渡す。
-2. `messi` が質問と進捗を表示し、ユーザーとの合意を形成する（最大3ターン）。
-3. `messi` が `docs/specs/auth-SSoT.md`（または自動探索されたフォルダ）に仕様書を作成する。
-4. ユーザーが `suarez` を実行し、`auth-SSoT.md` を監査させる。
-5. `suarez` が全不変条件の監査を行い、`.agents/gdd-reports/auth-gdd-validator-report.md` を出力する（判定: `PASS`）。
-6. ユーザーが仕様を確定（検収）する。
+2. `messi` が既存ルールファイルを探索し、存在しない場合は共通ルールがないかをユーザーにヒアリングする。提示された場合は、自動的に `.agents/rules/project-rules.md` に永続化保存する。
+3. `messi` が質問と進捗を表示し、ユーザーとの合意を形成する（最大3ターン）。
+4. `messi` が `docs/specs/auth-SSoT.md`（または自動探索されたフォルダ）に仕様書を作成する。
+5. ユーザーが `suarez` を実行し、`auth-SSoT.md` を監査させる。
+6. `suarez` が全不変条件の監査を行い、`.agents/gdd-reports/auth-gdd-validator-report.md` を出力する（判定: `PASS`）。
+7. ユーザーが仕様を確定（検収）する。
 
 ### ユースケース 2: 監査によるエラー検出と自動修復
 1. `suarez` の監査で不備が検出され、`.agents/gdd-reports/auth-gdd-validator-report.md` が出力される（判定: `FAIL`）。
