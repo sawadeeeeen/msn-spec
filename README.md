@@ -66,24 +66,58 @@ npx skills add sawadeeeeen/msn-spec --skill gdd-validator
 
 ## 🔄 AIエージェントとの協調フロー（使い方）
 
-インストール完了後、AIエージェントのチャット等で以下のようにスラッシュコマンド、またはメンションで呼び出します。
+ユーザーはプロジェクトの**「Manager（監督）」**として、3つのスキル（Messi, Suárez, Neymar）にパスを出し、最終的に検証・修復された高品質な `SSoT.md` を検収します。
 
-### 1. 仕様の作成 (`gdd-creator`)
+### 🏃‍♂️ 基本的な協調フロー
+
+```mermaid
+sequenceDiagram
+    autonumber
+    actor Manager as ユーザー (Manager)
+    participant Messi as Messi (Creator)
+    participant Suarez as Suarez (Validator)
+    participant Neymar as Neymar (Resolver)
+
+    Manager->>Messi: /gdd-creator 「機能Xの仕様を作って」
+    Note over Messi: 要点質問の後、ドラフトを作成
+    Messi-->>Manager: SSoT.md (ドラフト提示)
+
+    Manager->>Suarez: /gdd-validator 「@SSoT.md を監査して」
+    Note over Suarez: 境界値、異常系、Howの混入をチェック
+    Suarez-->>Manager: 監査テストレポート (FAIL)
+
+    Manager->>Neymar: /gdd-resolver 「@SSoT.md と @レポート を元に修復して」
+    Note over Neymar: 指摘箇所の解消、仕様の補強
+    Neymar-->>Manager: 修復された最新の SSoT.md
+
+    Manager->>Manager: 最終検収 (仕様確定)
+```
+
+---
+
+### 📥 呼び出しコマンドと指示例
+
+#### 1. 仕様の作成 (Messi / `gdd-creator`)
+ユーザー（Manager）が最初の要求をパスします。質問によるすり合わせを経てドラフトを作成します。
 ```text
 /gdd-creator
 「新規会員登録における、メールアドレス重複チェック機能を追加したい。仕様ドラフトを作って」
 ```
 
-### 2. 仕様の品質監査 (`gdd-validator`)
+#### 2. 仕様の品質監査 (Suárez / `gdd-validator`)
 生成された `SSoT.md` をインプットにして呼び出します。
 ```text
 /gdd-validator
 @SSoT.md を徹底的にレビューして、考慮漏れやHowの混入、境界値エラーがないかテストレポート（監査エラーリスト）を出して。
 ```
 
-### 3. 仕様の自動修復 (`gdd-resolver`)
-監査エラーが出た場合、自動修復（自己復旧）を指示します。
+#### 3. 仕様の自動修復 (Neymar / `gdd-resolver`)
+監査エラー（FAIL）が出た場合、自動修復を指示します。
 ```text
 /gdd-resolver
 @SSoT.md と @gdd-validatorのレポート を元に、SSoT仕様書を自動修復してクリーンにアップデートして。
 ```
+
+#### 4. Managerによる最終検収
+修復が完了し、`SSoT.md` がクリーンになった段階で、Manager（あなた）が最終的な仕様の整合性とビジネス要求の合致を確認し、仕様を確定（検収）します。
+
