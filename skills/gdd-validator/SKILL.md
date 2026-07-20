@@ -41,3 +41,13 @@ disable-model-invocation: false
 - **保存先パス**: `.agents/gdd-reports/[機能名]-gdd-validator-report.md`
   - ※ `[機能名]` には、入力された仕様書 `[機能名]-SSoT.md` と同一のプレフィックスを使用します（例: `auth-gdd-validator-report.md`）。
 
+# ナビゲーションの提示
+監査結果の出力が完了した際、判定結果（PASS/FAIL）に応じて、メッセージの末尾にユーザーが次に取るべきステップを「⚽ Next Pass (推奨)」として明確に提示してください。
+- **FAIL の場合の提示例**:
+  > **⚽ Next Pass (推奨)**: 監査で不備が検出されました（FAIL）。次は Neymar (Resolver) にパスを回して自動修復させましょう。
+  > 以下のコマンドを実行、またはチャットに送信してください：
+  > `/gdd-resolver` または「`[機能名]-SSoT.md` と `.agents/gdd-reports/[機能名]-gdd-validator-report.md` を元に修復して」
+- **PASS の場合の提示例**:
+  > **⚽ Next Pass (推奨)**: 監査をクリアしました（PASS）。仕様書はクリーンです。仕様確定（最終検収）へお進みください！
+
+
