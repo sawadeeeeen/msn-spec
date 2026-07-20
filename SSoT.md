@@ -15,20 +15,22 @@
 - **移行計画書 (Migration Plan)**: `[機能名]-migration-plan.md`（例: `auth-migration-plan.md`）
   - **格納ディレクトリ**: デフォルトは **`docs/migrations/`** とする。
   - **クリーンアップルール**: 移行プロジェクトが完了し、仕様確定・リリースされた段階で、このフォルダごとファイルを削除（クリーンアップ）し、SSoTのみを残す。
+- **進捗ダッシュボード (Progress Dashboard)**: `.agents/gdd-progress.md` ※プロジェクトルートを汚さない隠しフォルダ配下。
+  - プロジェクト全体のGDD進捗（ドメイン別のSSoT配置、PASS/FAIL判定、移行ステータス等）を俯瞰するためのマークダウンファイル。
 - **監査テストレポート**: `.agents/gdd-reports/[機能名]-gdd-validator-report.md` ※プロジェクトルートを汚さない隠しフォルダ配下。
 - **プロジェクト固有のルール (ローカルルール)**: `.agents/rules/*.md`, `CONTEXT.md`, `docs/adr/*.md` (または `adr/*.md`)
-  - ※ プロジェクト独自のコーディング規約や設計方針が存在する場合、各スキルは追加の設計・監査制約としてこれらを自動的に読み込み適用する。
+  - ※ プロジェクト独自のコーディング規約や設計方針が存在する場合、各スキルは追加 of 設計・監査制約としてこれらを自動的に読み込み適用する。
 
 ### 2.2. 各コンポーネントの入出力
 - **messi (Messi / 仕様作成)**:
-  - インプット: ユーザー要求、既存のコード/ドキュメント、既存の `[機能名]-SSoT.md`、プロジェクト固有のルール（任意）
-  - アウトプット: `[機能名]-SSoT.md`、および **`[機能名]-migration-plan.md`（大規模移行・更新時のみ自動作成）**
+  - インプット: ユーザー要求、既存のコード/ドキュメント、既存の `[機能名]-SSoT.md`、プロジェクト固有のルール（任意）、**.agents/gdd-progress.md (存在する場合)**
+  - アウトプット: `[機能名]-SSoT.md`、`[機能名]-migration-plan.md`（大規模移行・更新時のみ自動作成）、および **.agents/gdd-progress.md（該当機能行の新規追加・ドラフト作成完了ステータス更新）**
 - **suarez (Suárez / 品質監査)**:
-  - インプット: `[機能名]-SSoT.md`、**`[機能名]-migration-plan.md`（任意）**、プロジェクト固有のルール（任意）
-  - アウトプット: `.agents/gdd-reports/[機能名]-gdd-validator-report.md`
+  - インプット: `[機能名]-SSoT.md`、`[機能名]-migration-plan.md`（任意）、プロジェクト固有のルール（任意）、**.agents/gdd-progress.md (存在する場合)**
+  - アウトプット: `.agents/gdd-reports/[機能名]-gdd-validator-report.md`、および **.agents/gdd-progress.md（該当判定のPASS/FAILステータス更新）**
 - **neymar (Neymar / 自動修復)**:
-  - インプット: `[機能名]-SSoT.md`、**`[機能名]-migration-plan.md`（任意）**、`.agents/gdd-reports/[機能名]-gdd-validator-report.md`、プロジェクト固有のルール（任意）
-  - アウトプット: 修復された `[機能名]-SSoT.md`、および **`[機能名]-migration-plan.md`（修復対象時）**
+  - インプット: `[機能名]-SSoT.md`、`[機能名]-migration-plan.md`（任意）、`.agents/gdd-reports/[機能名]-gdd-validator-report.md`、プロジェクト固有のルール（任意）、**.agents/gdd-progress.md (存在する場合)**
+  - アウトプット: 修復された `[機能名]-SSoT.md`、`[機能名]-migration-plan.md`（修復対象時）、および **.agents/gdd-progress.md（自動修復中または人間介入待ちのステータス更新）**
 
 ---
 
@@ -52,6 +54,7 @@
 - **レポートのF/Zパターン可読性と全項目監査**: `suarez` の監査レポートは、最上部（Fパターンの視点）に判定結果（`🟢 PASS` または `🔴 FAIL`）を強調表示し、`3.3. 不変条件` に定義されたすべての項目に対する個別検証結果を網羅すること。最下部（Zパターンの視点）には、次に人間が実行すべき CLI コマンド（例: `/neymar`）をコピー＆ペースト可能なコードブロック形式で明示すること。エラー時は `[ERROR-XX]` という一意の識別IDを付与すること。
 - **完全修復の義務**: `neymar` は、対応する `[機能名]-gdd-validator-report.md` に記載された `[ERROR-XX]` のすべての指摘事項を論理的に解消し、漏れなく修復すること。
 - **移行計画書の整合性と可読性**: 移行用の計画書（`docs/migrations/[機能名]-migration-plan.md`）が存在する場合、仕様書（SSoT）の新規定義や変更点が計画書側のタスクリストに漏れなく網羅されているか、および開発者が迷わないよう「新旧の対応マッピング」や「修正コードパス」が極めて見やすく整理されているかを厳密に検証すること。
+- **進捗ダッシュボードの自動同期**: プロジェクト全体の進捗を示す `.agents/gdd-progress.md` が存在する場合、Messi, Suárez, Neymar はドキュメント作成・監査判定・自動修復時に、該当機能の最新ステータス（未着手、監査PASS、監査FAIL、自動修復中、人間介入待ち等）をダッシュボード内の進捗テーブルにリアルタイムで自動同期・反映すること。
 
 ---
 
