@@ -1,5 +1,5 @@
 ---
-name: gdd-resolver
+name: neymar
 description: "SSoT仕様書とValidatorから出力されたテストレポート（エラーリスト）を受け取り、不整合や考慮漏れを自律的に自動修復するスキル。"
 disable-model-invocation: false
 ---
@@ -24,6 +24,6 @@ disable-model-invocation: false
    - 提示例:
      > **⚽ Next Pass (推奨)**: 仕様書の修復が完了しました。修正内容が本当に正しいか、もう一度 Suárez (Validator) にパスを戻して検証しましょう。
      > 以下のコマンドを実行、またはチャットに送信してください：
-     > `/gdd-validator` または「`[機能名]-SSoT.md` を監査して」
+     > `/suarez` または「`[機能名]-SSoT.md` を監査して」
 
 

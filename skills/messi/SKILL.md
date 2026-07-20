@@ -1,5 +1,5 @@
 ---
-name: gdd-creator
+name: messi
 description: "ユーザー要求や雑多なメモから、無駄を削ぎ落とした高純度のシステム設計仕様書（SSoT）のドラフトをビルドアップするスキル。"
 disable-model-invocation: false
 ---
@@ -46,7 +46,7 @@ disable-model-invocation: false
   - 提示例:
     > **⚽ Next Pass (推奨)**: 仕様書 `docs/specs/[機能名]-SSoT.md` が作成されました。次は Suárez (Validator) にパスを回して品質を監査しましょう。
     > 以下のコマンドを実行、またはチャットに送信してください：
-    > `/gdd-validator` または「`docs/specs/[機能名]-SSoT.md` を監査して」
+    > `/suarez` または「`docs/specs/[機能名]-SSoT.md` を監査して」
 
 
 ## [機能名]-SSoT.md 推奨構成テンプレート

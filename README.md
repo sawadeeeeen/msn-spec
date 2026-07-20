@@ -10,9 +10,9 @@
 
 ```mermaid
 graph TD
-    User([ユーザー要求・メモ]) -->|パス| Messi[Messi: gdd-creator]
-    Messi -->|SSoT.md ドラフト| Suarez[Suárez: gdd-validator]
-    Suarez -->|監査エラーリスト| Neymar[Neymar: gdd-resolver]
+    User([ユーザー要求・メモ]) -->|パス| Messi[Messi: messi]
+    Messi -->|SSoT.md ドラフト| Suarez[Suárez: suarez]
+    Suarez -->|監査エラーリスト| Neymar[Neymar: neymar]
     Neymar -->|修復・アップデート| Messi
     Neymar -->|完成された仕様書| Goal((SSoT 完成!))
 
@@ -22,17 +22,17 @@ graph TD
     style Goal fill:#b5e7a0,stroke:#333,stroke-width:2px,color:#111
 ```
 
-### 🇦🇷 Messi (Creator / 仕様作成) — `gdd-creator`
+### 🇦🇷 Messi (Creator / 仕様作成) — `messi`
 * **役割**: 天才的な視野と高精度なパスで、無から完璧なチャンス（高純度なSSoT設計図）をビルドアップする。
-* **機能**: 雑多なメモやアイデアから、不必要なノイズを取り除き、入力・出力・不変条件を厳格に定義した `SSoT.md` のドラフトを作成します。
+* **機能**: 既存コードや設計方針を自動探索し、質問（Grill）を経て、`docs/specs/[機能名]-SSoT.md` を作成・更新します。
 
-### 🇺🇾 Suárez (Validator / 品質監査) — `gdd-validator`
+### 🇺🇾 Suárez (Validator / 品質監査) — `suarez`
 * **役割**: 貪欲に相手の隙（仕様の脆弱性や境界エラー）を狙い、獰猛なプレッシングでバグをあぶり出す。
-* **機能**: 作成された `SSoT.md` を、境界値、異常系、非機能要件、およびWhatとHowの混入などの観点から厳格に監査し、抜け漏れをリストアップしたテストレポートを出力します。
+* **機能**: 仕様書が満たすべきすべての「不変条件」を網羅的に監査し、不備を指摘したエラーレポートを隠しフォルダ配下の `.agents/gdd-reports/` に出力します。
 
-### 🇧🇷 Neymar (Resolver / 自動修復) — `gdd-resolver`
+### 🇧🇷 Neymar (Resolver / 自動修復) — `neymar`
 * **役割**: 圧倒的な創造性とステップで、詰んだ状況（Validatorのエラーレポート）を自律的に打開し、ゴールへと繋げる。
-* **機能**: 仕様書と監査エラーリストを読み込み、矛盾なく論理的に修復された最新の `SSoT.md` へとアップデートします。
+* **機能**: 仕様書と監査レポートからすべてのエラーIDを読み取り、論理的に矛盾なく修復された最新の `[機能名]-SSoT.md` を上書き保存します。
 
 ---
 
@@ -44,9 +44,10 @@ graph TD
 # 3つのGDD協調スキルを一括インストール
 npx skills add sawadeeeeen/msn-spec
 
-# 特定のスキル（例: validatorのみ）を個別インストールする場合
-npx skills add sawadeeeeen/msn-spec --skill gdd-validator
+# 特定のスキル（例: messiのみ）を個別インストールする場合
+npx skills add sawadeeeeen/msn-spec --skill messi
 ```
+
 ### 💡 各IDEにおける自動連携
 `npx skills` を実行すると、Cursor、Claude Code、ClineなどのIDEが参照する設定フォルダ（`.agents/skills/` や `.cursor/skills/` など）に各スキルが自動配置され、シームレスに利用可能になります。
 
@@ -63,7 +64,7 @@ npx skills add sawadeeeeen/msn-spec --skill gdd-validator
   ```
 
 #### 🤖 自動ルーティングの有効化（推奨）
-毎回手動で `/gdd-creator` などのスラッシュコマンドを入力する手間を省き、AIが会話の流れから自発的に Messi, Suárez, Neymar の役割を切り替えて動くようにするために、プロジェクトの隠しフォルダ内にある **`.agents/AGENTS.md`** にルーティングルールを追記します。
+毎回手動で `/messi` などのスラッシュコマンドを入力する手間を省き、AIが会話の流れから自発的に Messi, Suárez, Neymar の役割を切り替えて動くようにするために、プロジェクトの隠しフォルダ内にある **`.agents/AGENTS.md`** にルーティングルールを追記します。
 
 ##### 🛠️ 設定方法 A: AIエージェントに追記を依頼する（推奨）
 インストール後、プロジェクトのチャット等でAIに以下のように指示してください。既存のプロジェクトルールを破壊せずに、安全に追記してくれます。
@@ -83,7 +84,7 @@ cat AGENTS.md >> .agents/AGENTS.md
 
 ## 🔄 AIエージェントとの協調フロー（使い方）
 
-ユーザーはプロジェクトの**「Manager（監督）」**として、3つのスキル（Messi, Suárez, Neymar）にパスを出し、最終的に検証・修復された高品質な `SSoT.md` を検収します。
+ユーザーはプロジェクトの**「Manager（監督）」**として、3つのスキル（Messi, Suárez, Neymar）にパスを出し、最終的に検証・修復された高品質な `[機能名]-SSoT.md` を検収します。
 
 ### 🏃‍♂️ 基本的な協調フロー
 
@@ -91,21 +92,21 @@ cat AGENTS.md >> .agents/AGENTS.md
 sequenceDiagram
     autonumber
     actor Manager as ユーザー (Manager)
-    participant Messi as Messi (Creator)
-    participant Suarez as Suarez (Validator)
-    participant Neymar as Neymar (Resolver)
+    participant Messi as Messi (messi)
+    participant Suarez as Suarez (suarez)
+    participant Neymar as Neymar (neymar)
 
-    Manager->>Messi: /gdd-creator 「機能Xの仕様を作って」
-    Note over Messi: 要点質問の後、ドラフトを作成
-    Messi-->>Manager: SSoT.md (ドラフト提示)
+    Manager->>Messi: /messi 「機能Xの仕様を作って」
+    Note over Messi: 要点質問（最大3ターン）の後、ドラフトを作成
+    Messi-->>Manager: [機能名]-SSoT.md (ドラフト提示)
 
-    Manager->>Suarez: /gdd-validator 「@SSoT.md を監査して」
-    Note over Suarez: 境界値、異常系、Howの混入をチェック
+    Manager->>Suarez: /suarez 「@docs/specs/[機能名]-SSoT.md を監査して」
+    Note over Suarez: 不変条件の網羅チェック、Howの混入をチェック
     Suarez-->>Manager: 監査テストレポート (FAIL)
 
-    Manager->>Neymar: /gdd-resolver 「@SSoT.md と @レポート を元に修復して」
+    Manager->>Neymar: /neymar 「@docs/specs/[機能名]-SSoT.md と @レポート を元に修復して」
     Note over Neymar: 指摘箇所の解消、仕様の補強
-    Neymar-->>Manager: 修復された最新の SSoT.md
+    Neymar-->>Manager: 修復された最新の [機能名]-SSoT.md
 
     Manager->>Manager: 最終検収 (仕様確定)
 ```
@@ -114,27 +115,26 @@ sequenceDiagram
 
 ### 📥 呼び出しコマンドと指示例
 
-#### 1. 仕様の作成 (Messi / `gdd-creator`)
+#### 1. 仕様の作成 (Messi / `messi`)
 ユーザー（Manager）が最初の要求をパスします。質問によるすり合わせを経てドラフトを作成します。
 ```text
-/gdd-creator
+/messi
 「新規会員登録における、メールアドレス重複チェック機能を追加したい。仕様ドラフトを作って」
 ```
 
-#### 2. 仕様の品質監査 (Suárez / `gdd-validator`)
-生成された `SSoT.md` をインプットにして呼び出します。
+#### 2. 仕様の品質監査 (Suárez / `suarez`)
+生成された仕様書ファイルをインプットにして呼び出します。
 ```text
-/gdd-validator
-@SSoT.md を徹底的にレビューして、考慮漏れやHowの混入、境界値エラーがないかテストレポート（監査エラーリスト）を出して。
+/suarez
+@docs/specs/auth-SSoT.md を徹底的にレビューして、考慮漏れやHowの混入、境界値エラーがないかテストレポート（監査エラーリスト）を出して。
 ```
 
-#### 3. 仕様の自動修復 (Neymar / `gdd-resolver`)
+#### 3. 仕様の自動修復 (Neymar / `neymar`)
 監査エラー（FAIL）が出た場合、自動修復を指示します。
 ```text
-/gdd-resolver
-@SSoT.md と @gdd-validatorのレポート を元に、SSoT仕様書を自動修復してクリーンにアップデートして。
+/neymar
+@docs/specs/auth-SSoT.md と @.agents/gdd-reports/auth-gdd-validator-report.md を元に、SSoT仕様書を自動修復してクリーンにアップデートして。
 ```
 
 #### 4. Managerによる最終検収
-修復が完了し、`SSoT.md` がクリーンになった段階で、Manager（あなた）が最終的な仕様の整合性とビジネス要求の合致を確認し、仕様を確定（検収）します。
-
+修復が完了し、`[機能名]-SSoT.md` がクリーンになった段階で、Manager（あなた）が最終的な仕様の整合性とビジネス要求の合致を確認し、仕様を確定（検収）します。

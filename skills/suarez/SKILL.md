@@ -1,5 +1,5 @@
 ---
-name: gdd-validator
+name: suarez
 description: "生成されたSSoTに対して、異常系・境界値・非機能要件、What vs Howの観点から徹底的な監査を行い、仕様の抜け漏れ（テストレポート）をあぶり出すスキル。"
 disable-model-invocation: false
 ---
@@ -55,7 +55,7 @@ disable-model-invocation: false
 - **FAIL の場合の提示例**:
   > **⚽ Next Pass (推奨)**: 監査で不備が検出されました（FAIL）。次は Neymar (Resolver) にパスを回して自動修復させましょう。
   > 以下のコマンドを実行、またはチャットに送信してください：
-  > `/gdd-resolver` または「`[機能名]-SSoT.md` と `.agents/gdd-reports/[機能名]-gdd-validator-report.md` を元に修復して」
+  > `/neymar` または「`[機能名]-SSoT.md` と `.agents/gdd-reports/[機能名]-gdd-validator-report.md` を元に修復して」
 - **PASS の場合の提示例**:
   > **⚽ Next Pass (推奨)**: 監査をクリアしました（PASS）。仕様書はクリーンです。仕様確定（最終検収）へお進みください！
 
