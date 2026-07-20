@@ -62,6 +62,14 @@ npx skills add sawadeeeeen/msn-spec --skill gdd-validator
   npx skills add sawadeeeeen/msn-spec -g
   ```
 
+#### 🤖 自動ルーティングの有効化（推奨）
+毎回手動で `/gdd-creator` などのスラッシュコマンドを入力する手間を省き、AIが会話の流れ（コンテキスト）から自発的にMessi, Suárez, Neymarの役割を切り替えて動くようにするために、リポジトリに同梱されている **`AGENTS.md`** をプロジェクトの隠しフォルダに配置します。
+
+```bash
+# インストール先プロジェクトのルートで実行し、ルーティング定義を配置します
+cp AGENTS.md .agents/AGENTS.md
+```
+
 ---
 
 ## 🔄 AIエージェントとの協調フロー（使い方）
