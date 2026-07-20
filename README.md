@@ -47,10 +47,6 @@ npx skills add sawadeeeeen/msn-spec
 # 特定のスキル（例: validatorのみ）を個別インストールする場合
 npx skills add sawadeeeeen/msn-spec --skill gdd-validator
 ```
-
-> [!NOTE]
-> 外部のユーザーがご自身のリポジトリで利用する場合は、`sawadeeeeen` の部分をご自身のGitHubユーザー名に変更して実行してください。
-
 ### 💡 各IDEにおける自動連携
 `npx skills` を実行すると、Cursor、Claude Code、ClineなどのIDEが参照する設定フォルダ（`.agents/skills/` や `.cursor/skills/` など）に各スキルが自動配置され、シームレスに利用可能になります。
 
