@@ -8,9 +8,11 @@
 
 本パッケージは、対象プロジェクトのルートディレクトリにおいて、以下の命名規則に基づいてファイルを介し、情報の受け渡しを行う。
 
-### 2.1. 命名規則 (Naming Convention)
-- **仕様書（SSoT）**: `[機能名]-SSoT.md`（例: `auth-SSoT.md`）※プロジェクトルートまたは設計用ディレクトリ
-- **監査テストレポート**: `.agents/gdd-reports/[機能名]-gdd-validator-report.md`（例: `.agents/gdd-reports/auth-gdd-validator-report.md`）※隠しフォルダ配下
+### 2.1. 命名規則と格納場所 (Naming & Location)
+- **仕様書（SSoT）**: `[機能名]-SSoT.md`（例: `auth-SSoT.md`）
+  - **格納ディレクトリ**: デフォルトは **`docs/specs/`** とする。
+  - **自動探索フォールバック**: すでにプロジェクト内に他の階層で `*SSoT.md` が存在する場合、またはユーザーから明示的なフォルダ指定がある場合は、既存および指定されたフォルダを最優先で探索・使用する。
+- **監査テストレポート**: `.agents/gdd-reports/[機能名]-gdd-validator-report.md` ※プロジェクトルートを汚さない隠しフォルダ配下。
 
 ### 2.2. 各コンポーネントの入出力
 - **gdd-creator (Messi / 仕様作成)**:
@@ -39,7 +41,7 @@
 - **SSoTの純度 (What vs How)**: `[機能名]-SSoT.md` には「何をするか（What）」のみを定義し、「どう実装するか（How）」を含めてはならない。
 - **対話と進捗の可視化**: `gdd-creator` は、仕様作成時に質問を投げる際、必ず全体のステップ数と現在の進捗（例: `[1/3]`）を提示すること。
 - **対話の最大上限 (3ターン制限)**: `gdd-creator` の対話フェーズにおける質問ラリーは**最大3回（3ターン）**までとし、それに達した場合はその時点の合意事項に基づき必ず `[機能名]-SSoT.md` を書き出すこと（未解決の細部は後流の `gdd-validator` に委ねる）。
-- **レポートの標準化**: `gdd-validator` が出力するレポートは、必ず「総合判定（`PASS` / `FAIL`）」を明記し、指摘事項には `[ERROR-XX]` という一意の識別IDを付与すること。
+- **レポートの標準化と全項目監査**: `gdd-validator` が出力するレポートは、必ず「総合判定（`PASS` / `FAIL`）」を明記し、`3.3. 不変条件` に定義されたすべての項目（What vs How, 3ターン制限等）に対する個別の検証結果（監査結果）を網羅的に記載すること。エラー時は `[ERROR-XX]` という一意の識別IDを付与すること。
 - **完全修復の義務**: `gdd-resolver` は、対応する `[機能名]-gdd-validator-report.md` に記載された `[ERROR-XX]` のすべての指摘事項を論理的に解消し、漏れなく修復すること。
 
 ---
@@ -48,10 +50,10 @@
 
 ### ユースケース 1: 新規仕様作成と検証
 1. ユーザー（Manager）が `gdd-creator` に新規機能名（例: `auth`）と要求を渡す。
-2. `gdd-creator` が質問を提示し、ユーザーが回答して合意を形成する。
-3. `gdd-creator` が `auth-SSoT.md` を新規作成する。
+2. `gdd-creator` が質問と進捗を表示し、ユーザーとの合意を形成する（最大3ターン）。
+3. `gdd-creator` が `docs/specs/auth-SSoT.md`（または自動探索されたフォルダ）に仕様書を作成する。
 4. ユーザーが `gdd-validator` を実行し、`auth-SSoT.md` を監査させる。
-5. `gdd-validator` が監査を行い、`.agents/gdd-reports/auth-gdd-validator-report.md` を出力する（判定: `PASS`）。
+5. `gdd-validator` が全不変条件の監査を行い、`.agents/gdd-reports/auth-gdd-validator-report.md` を出力する（判定: `PASS`）。
 6. ユーザーが仕様を確定（検収）する。
 
 ### ユースケース 2: 監査によるエラー検出と自動修復
